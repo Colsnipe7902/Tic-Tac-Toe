@@ -1,0 +1,28 @@
+
+board = [' '] * 9
+
+def print_board():
+    for i in range(0, 9, 3):
+        print(f'{board[i]} | {board[i+1]} | {board[i+2]}')
+    if i < 6: print('--+---+--')
+
+def check_winner(player):
+    win_conditions = [(0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6)]
+    return any(board[i] == board[j] == board[k] == player for i, j, k in win_conditions)
+
+def play_game():
+    for turn in range(9):
+        print_board()
+        move = int(input(f"Player {'X' if turn % 2 == 0 else 'O'}, choose 1-9: ")) - 1
+        if board[move] != ' ':
+            print("Invalid move, try again.")
+            continue
+        board[move] = 'X' if turn % 2 == 0 else 'O'
+        if check_winner(board[move]):
+            print_board()
+            print(f"Player {board[move]} wins!")
+            return
+    print_board()
+    print("It's a tie!")
+
+play_game()
